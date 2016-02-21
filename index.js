@@ -129,10 +129,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
    },
    defaultModalStyle: {
-      borderRadius: 2,
       margin: 40,
-      padding: 10,
-      backgroundColor: '#F5F5F5'
+      padding: 0,
+      backgroundColor: '#F5F5F5',
    }
 });
 
