@@ -27,7 +27,7 @@ class Modal extends Component {
          Animated.timing(
             this.state.opacity,
             {
-               toValue,
+               toValue: toValue,
                duration: animationDuration
             }
          ).start();
@@ -53,23 +53,31 @@ class Modal extends Component {
    render() {
       const {opacity, open, scale, offset, renderedContent} = this.state;
       const {overlayOpacity} = this.props;
+      console.log(opacity)
       return (
          <View
          pointerEvents={open ? 'auto' : 'none'}
-         style={[styles.absolute, styles.container]}>
-            <TouchableOpacity
-            style={styles.absolute}
-            onPress={this.close.bind(this)}
-            activeOpacity={0.75}>
-               <Animated.View style={{flex: 1, opacity, backgroundColor: 'rgba(0, 0, 0, ' + overlayOpacity + ')'}} />
-            </TouchableOpacity>
+         style={[styles.absolute, styles.container, {
+           width: this.props.viewport.width,
+           height: this.props.viewport.height,
+         }]}>
+         <TouchableOpacity
+           style={[styles.absolute, {
+            width: this.props.viewport.width,
+            height: this.props.viewport.height,
+           }]}
+           onPress={this.close.bind(this)}
+           activeOpacity={0.75}>
+              <Animated.View style={{flex: 1, opacity: opacity, backgroundColor: 'rgba(0, 0, 0, ' + overlayOpacity + ')'}} />
+           </TouchableOpacity>
+
             <Animated.View
                style={[
                   styles.defaultModalStyle,
                   this.props.style,
-                  {opacity, transform: [{scale}, {translateY: offset}]}
+                  {opacity: opacity, transform: [{scale}, {translateY: offset}]}
                ]}>
-               {renderedContent}
+               {this.props.renderContent()}
             </Animated.View>
          </View>
       );
@@ -77,11 +85,8 @@ class Modal extends Component {
 
    // public methods
    open() {
-      this.setState({open: true});
-      this.setState({
-         renderedContent: this.props.renderContent()
-      });
       this.setPhase(1);
+      this.setState({open: true});
    }
    close() {
       this.setPhase(0);
@@ -118,16 +123,14 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: 0,
       left: 0,
-      right: 0,
-      bottom: 0,
       backgroundColor: 'rgba(0, 0, 0, 0)'
    },
    container: {
-      justifyContent: 'center'
+      justifyContent: 'center',
    },
    defaultModalStyle: {
       borderRadius: 2,
-      margin: 20,
+      margin: 40,
       padding: 10,
       backgroundColor: '#F5F5F5'
    }
