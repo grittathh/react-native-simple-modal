@@ -19,7 +19,7 @@
     "android"
   ],
   "peerDependencies": {
-    "react-native": "^0.17.0"
+    "react-native": ">=0.17.0"
   },
   "author": "bodyflex",
   "license": "MIT",
