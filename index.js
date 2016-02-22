@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
    defaultModalStyle: {
       margin: 40,
       padding: 0,
-      backgroundColor: '#F5F5F5',
    }
 });
 
